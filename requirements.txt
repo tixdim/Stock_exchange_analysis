@@ -1,0 +1,11 @@
+requests
+Flask
+Django
+tensorflow
+keras
+numpy
+pandas
+
+
+
+
