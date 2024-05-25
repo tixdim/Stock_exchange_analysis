@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Investment Prediction</h1>
+        <form method="post">
+            <label for="company">Select Stock:</label>
+            <select id="company" name="company">
+                <option value="AAPL">Apple (AAPL)</option>
+                <option value="GOOGL">Google (GOOGL)</option>
+                <option value="MSFT">Microsoft (MSFT)</option>
+                <!-- Добавьте другие акции по необходимости -->
+            </select>
+            <button type="submit">Predict</button>
+        </form>
+        {% if prediction %}
+            <h2>Predicted Price: ${{ prediction }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
