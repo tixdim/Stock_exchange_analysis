@@ -5,23 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Investment Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Investment Prediction</h1>
         <form method="post">
             <label for="company">Select Stock:</label>
-            <select id="company" name="company">
-                <option value="AAPL">Apple (AAPL)</option>
-                <option value="GOOGL">Google (GOOGL)</option>
-                <option value="MSFT">Microsoft (MSFT)</option>
-                <!-- Добавьте другие акции по необходимости -->
+            <select id="company" name="company" class="small-select">
+                <option value="AAPL" {% if selected_company=="AAPL" %}selected{% endif %}>Apple (AAPL)</option>
+                <option value="GOOG" {% if selected_company=="GOOG" %}selected{% endif %}>Google (GOOG)</option>
+                <option value="INTC" {% if selected_company=="INTC" %}selected{% endif %}>Intel (INTC)</option>
+                <option value="NVDA" {% if selected_company=="NVDA" %}selected{% endif %}>NVIDIA (NVDA)</option>
+                <option value="TSLA" {% if selected_company=="TSLA" %}selected{% endif %}>Tesla (TSLA)</option>
+                <option value="AMD" {% if selected_company=="AMD" %}selected{% endif %}>Advanced Micro Devices (AMD)</option>
+                <option value="AMZN" {% if selected_company=="AMZN" %}selected{% endif %}>Amazon (AMZN)</option>
+                <option value="F" {% if selected_company=="F" %}selected{% endif %}>Ford (F)</option>
+                <option value="NFLX" {% if selected_company=="NFLX" %}selected{% endif %}>Netflix (NFLX)</option>
+                <option value="AAL" {% if selected_company=="AAL" %}selected{% endif %}>American Airlines (AAL)</option>
             </select>
-            <button type="submit">Predict</button>
+            <button type="submit" class="small-button">Predict</button>
         </form>
+        {% if selected_company %}
+            <h2>Selected Company: {{ selected_company }}</h2>
+        {% endif %}
         {% if prediction %}
             <h2>Predicted Price: ${{ prediction }}</h2>
+        {% elif error %}
+            <h2 class="error">{{ error }}</h2>
+        {% endif %}
+
+        {% if latest_dates and latest_prices %}
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
         {% endif %}
     </div>
+    <script>
+        var latestDates = {{ latest_dates | safe }};
+        var latestPrices = {{ latest_prices | safe }};
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
